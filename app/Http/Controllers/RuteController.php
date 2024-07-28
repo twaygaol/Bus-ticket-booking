@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Rute;
 use App\Models\Transportasi;
 use Illuminate\Http\Request;
+use App\Models\Pemesanan;
 
 class RuteController extends Controller
 {
@@ -112,7 +113,20 @@ class RuteController extends Controller
      */
     public function destroy($id)
     {
-        Rute::find($id)->delete();
-        return redirect()->back()->with('success', 'Success Delete Rute!');
+        // Cari rute dengan ID yang diberikan
+        $rute = Rute::find($id);
+
+        if ($rute) {
+            // Hapus pemesanan yang terkait dengan rute ini
+            Pemesanan::where('rute_id', $id)->delete();
+
+            // Hapus rute
+            $rute->delete();
+
+            return redirect()->back()->with('success', 'Success Delete Rute!');
+        } else {
+            return redirect()->back()->with('error', 'Rute not found!');
+        }
     }
+
 }

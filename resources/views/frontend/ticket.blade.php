@@ -1,5 +1,5 @@
-@extends('layouts.app')
-@section('title', 'Home')
+@extends('frontend.app')
+@section('title', 'Cari tiket')
 @section('styles')
   <link href="{{ asset('vendor/select2/dist/css/select2.min.css') }}" rel="stylesheet"/>
   <style>

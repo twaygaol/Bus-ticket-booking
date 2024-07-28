@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Rute')
-@section('heading', 'Rute Tujuan Keberangkatan')
+@section('title', 'Artikel')
+@section('heading', 'Seputar transportasi')
 
 @section('styles')
 <link href="{{ asset('vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet"/>
@@ -18,7 +18,7 @@
         data-toggle="modal"
         data-target="#add-modal"
       >
-        <i class="fas fa-plus mr-2"></i> Tambah Rute
+        <i class="fas fa-plus mr-2"></i> Tambah artikel
       </button>
     </div>
     <div class="overflow-x-auto">
@@ -26,15 +26,13 @@
         <thead class="bg-gray-200">
           <tr>
             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">No</th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">Nama Transportasi</th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">Tujuan & Rute</th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">Harga</th>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">Waktu</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">Title</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">Gambar</th>
             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase tracking-wider">Aksi</th>
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
-          @foreach ($rute as $data)
+          @foreach ($artikel as $data)
           <tr>
             <td class="px-6 py-4 whitespace-nowrap">{{ $loop->iteration }}</td>
             <td class="px-6 py-4 whitespace-nowrap">
@@ -48,24 +46,11 @@
                 </div>
               </div>
             </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-              <div class="text-sm font-medium text-gray-900">{{ $data->tujuan }}</div>
-              <div class="text-xs text-gray-500">{{ $data->start }} - {{ $data->end }}</div>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">Rp. {{ number_format($data->harga, 0, ',', '.') }}</td>
-            <td class="px-6 py-4 whitespace-nowrap">{{ date('H:i', strtotime($data->jam)) }}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
               <div class="flex items-center space-x-2">
                 <a href="{{ route('rute.edit', $data->id) }}" class="text-indigo-600 hover:text-indigo-900">
-                  <i class="fas fa-edit"></i>
+                  <i class="fas fa-show"></i>
                 </a>
-                <form action="{{ route('rute.destroy', $data->id) }}" method="POST" onsubmit="return confirm('Yakin hapus data ini?')">
-                  @csrf
-                  @method('delete')
-                  <button type="submit" class="text-red-600 hover:text-red-900">
-                    <i class="fas fa-trash"></i>
-                  </button>
-                </form>
               </div>
             </td>
           </tr>
@@ -81,7 +66,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header bg-gray-200">
-        <h5 class="modal-title" id="exampleModalLabel">Tambah Rute</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Tambah Seputar Transportasi</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -91,38 +76,21 @@
         <div class="modal-body">
           <input type="hidden" name="id">
           <div class="mb-4">
-            <label for="tujuan" class="block text-sm font-medium text-gray-700">Tujuan</label>
+            <label for="tujuan" class="block text-sm font-medium text-gray-700">Title</label>
             <input type="text" class="form-input mt-1 block w-full" id="tujuan" name="tujuan" placeholder="Tujuan" required>
           </div>
           <div class="mb-4">
-            <label for="start" class="block text-sm font-medium text-gray-700">Rute Awal</label>
-            <input type="text" class="form-input mt-1 block w-full" id="start" name="start" placeholder="Rute Awal" required>
+            <label for="start" class="block text-sm font-medium text-gray-700">Gambar</label>
+            <input type="file" class="form-input mt-1 block w-full" id="start" name="start" placeholder="Rute Awal" required>
           </div>
           <div class="mb-4">
-            <label for="end" class="block text-sm font-medium text-gray-700">Rute Akhir</label>
+            <label for="end" class="block text-sm font-medium text-gray-700">Description</label>
             <input type="text" class="form-input mt-1 block w-full" id="end" name="end" placeholder="Rute Akhir" required>
-          </div>
-          <div class="mb-4">
-            <label for="harga" class="block text-sm font-medium text-gray-700">Harga</label>
-            <input type="text" class="form-input mt-1 block w-full" id="harga" name="harga" onkeypress="return inputNumber(event)" placeholder="Harga" required>
-          </div>
-          <div class="mb-4">
-            <label for="jam" class="block text-sm font-medium text-gray-700">Jam Berangkat</label>
-            <input type="time" class="form-input mt-1 block w-full" id="jam" name="jam" required>
-          </div>
-          <div class="mb-4">
-            <label for="transportasi_id" class="block text-sm font-medium text-gray-700">Transportasi</label>
-            <select class="select2 form-select mt-1 block w-full" id="transportasi_id" name="transportasi_id" required>
-              <option value="" disabled selected>-- Pilih Transportasi --</option>
-              @foreach ($transportasi as $data)
-              <option value="{{ $data->id }}">{{ $data->kode }} - {{ $data->name }}</option>
-              @endforeach
-            </select>
           </div>
         </div>
         <div class="modal-footer bg-gray-200">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-          <button type="submit" class="btn btn-primary">Tambah</button>
+          <button type="submit" class="btn btn-primary">Tambah Artikel</button>
         </div>
       </form>
     </div>

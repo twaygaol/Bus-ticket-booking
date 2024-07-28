@@ -10,7 +10,7 @@
 @section('content')
   <div class="row justify-content-center">
     <div class="col-12" style="margin-top: -15px">
-      <a href="{{ url('/') }}" class="text-white btn"><i class="fas fa-arrow-left mr-2"></i> Kembali</a>
+      <a href="{{ url('/') }}" class="text-gray-900 btn"><i class="fas fa-arrow-left mr-2"></i> Kembali</a>
       <div class="row mt-2">
         @if (count($dataRute) > 0)
           @foreach ($dataRute as $data)

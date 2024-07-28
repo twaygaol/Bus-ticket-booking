@@ -26,7 +26,8 @@
                 </div>
               </div>
               <div class="col-auto">
-                <button type="submit" class="btn btn-primary px-4" style="font-size: 16px">
+                <button type="submit" class="inline-flex items-center px-4 py-2 text-sm font-medium text-black bg-green-500 border border-transparent rounded-md shadow-sm hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                style="font-size: 16px">
                   Cari
                 </button>
               </div>

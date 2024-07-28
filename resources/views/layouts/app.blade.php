@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- @vite('resources/css/app.css') -->
   <meta name="description" content="">
   <meta name="author" content="">
-
-  <title>Ticket - @yield('title')</title>
+  <title>PT Al MASAR - @yield('title')</title>
   <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}">
-
+  <!-- <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
   <!-- Custom fonts for this template-->
   <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -77,37 +78,19 @@
             <!-- /.container-fluid -->
           </div>
           <!-- End of Main Content -->
-          <!-- Footer -->
-          <footer class="sticky-footer bg-white">
-            <div class="container my-auto">
-              <div class="copyright text-center my-auto">
-                <span>
-                  Copyright &copy; 2020
-                  @if (date('Y') != '2020')
-                    - {{ date('Y') }}
-                  @endif
-                  &nbsp; All rights reserved • by
-                  <a href="https://github.com/adhiariyadi/" target="_blank"
-                    >Adhi Ariyadi</a
-                  >.
-                </span>
-              </div>
-            </div>
-          </footer>
-          <!-- End of Footer -->
         </div>
         <!-- End of Content Wrapper -->
       </div>
       <!-- End of Page Wrapper -->
     @else
-      <div class="bg-gradient-primary" style="height: 160px; border-bottom-left-radius: 50% 20px; border-bottom-right-radius: 50% 20px;">
+      <div class="bg-green-900" style="height: 160px; border-bottom-left-radius: 50% 20px; border-bottom-right-radius: 50% 20px;">
         <nav class="navbar navbar-expand navbar-light topbar mb-4">
           <div class="container">
             <a class="title" href="{{ url('/') }}">
               <div class="title-icon rotate-n-15">
-                <i class="fas fa-ticket-alt"></i>
+                <i class="fas fa-ticket-alt text-white"></i>
               </div>
-              <div class="title-text mx-3">Ticket</div>
+              <div class="title-text mx-3 text-white">PT AL MASAR</div>
             </a>
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
@@ -151,23 +134,6 @@
           @yield('content')
         </div>
       </div>
-      <!-- Footer -->
-      <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>
-              Copyright &copy; 2020
-              @if (date('Y') != '2020')
-                - {{ date('Y') }}
-              @endif
-              &nbsp; All rights reserved • by
-              <a href="https://github.com/adhiariyadi/" target="_blank"
-                >Adhi Ariyadi</a
-              >.
-            </span>
-          </div>
-        </div>
-      </footer>
     @endif
   @endguest
 

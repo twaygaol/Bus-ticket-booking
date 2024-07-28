@@ -1,255 +1,133 @@
 @extends('layouts.app')
+
 @section('title', 'Transportasi')
 @section('heading', 'Transportasi')
+
 @section('styles')
-  <link href="{{ asset('vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet"/>
-  <link href="{{ asset('vendor/select2/dist/css/select2.min.css') }}" rel="stylesheet"/>
-  <style>
-    thead > tr > th, tbody > tr > td{
-      vertical-align: middle !important;
-    }
-
-    .card-title {
-      float: left;
-      font-size: 1.1rem;
-      font-weight: 400;
-      margin: 0;
-    }
-
-    .ctr {
-      text-align: center !important;
-    }
-
-    .card-text {
-      clear: both;
-    }
-
-    small {
-      font-size: 80%;
-      font-weight: 400;
-    }
-
-    .text-muted {
-      color: #6c757d !important;
-    }
-    
-    .select2-container .select2-selection--single {
-      display: block;
-      width: 100%;
-      height: calc(1.5em + .75rem + 2px);
-      padding: .375rem .75rem;
-      font-size: 1rem;
-      font-weight: 400;
-      line-height: 2;
-      color: #6e707e;
-      background-color: #fff;
-      background-clip: padding-box;
-      border: 1px solid #d1d3e2;
-      border-radius: .35rem;
-      transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-    }
-
-    .select2-container--default .select2-selection--single .select2-selection__rendered {
-      color: #6e707e;
-      line-height: 28px;
-    }
-
-    .select2-container .select2-selection--single .select2-selection__rendered {
-      display: block;
-      padding-left: 0;
-      padding-right: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      margin-top: -2px;
-    }
-
-    .select2-container--default .select2-selection--single .select2-selection__arrow {
-      height: calc(1.5em + .75rem + 2px);
-      position: absolute;
-      top: 1px;
-      right: 1px;
-      width: 20px;
-    }
-  </style>
+<link href="{{ asset('vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet"/>
+<link href="{{ asset('vendor/select2/dist/css/select2.min.css') }}" rel="stylesheet"/>
 @endsection
+
 @section('content')
-  <div class="card shadow mb-4">
-    <div class="card-header py-3">
-      <!-- Button trigger modal -->
+<div class="container mx-auto py-6">
+  <div class="bg-white rounded-lg">
+    <div class="flex justify-between items-center px-6 py-4 border-b">
       <button
         type="button"
-        class="btn btn-primary btn-sm"
+        class="inline-flex items-center bg-green-500 text-black rounded-md px-4 py-2 hover:bg-primary-600 transition duration-300"
         data-toggle="modal"
         data-target="#add-modal"
       >
-        <i class="fas fa-plus"></i>
+        <i class="fas fa-plus mr-2"></i> Tambah
       </button>
     </div>
-    <div class="card-body">
-      <div class="table-responsive">
-        <table
-          class="table table-bordered table-striped table-hover"
-          id="dataTable"
-          width="100%"
-          cellspacing="0"
-        >
-          <thead>
+
+    <div class="p-4">
+      <div class="overflow-x-auto">
+        <table id="transportasi-table" class="table-auto min-w-full bg-white border-gray-200">
+          <thead class="bg-gray-500 text-gray-700">
             <tr>
-              <td>No</td>
-              <td>Kode</td>
-              <td>Name</td>
-              <td>Jumlah Kursi</td>
-              <th>Action</th>
+              <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">No</th>
+              <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Kode</th>
+              <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Nama</th>
+              <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Jumlah Kursi</th>
+              <th class="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider">Aksi</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="text-gray-700">
             @foreach ($transportasi as $data)
-              <tr>
-                <td>{{ $loop->iteration }}</td>
-                <td>{{ $data->kode }}</td>
-                <td>
-                  <h5 class="card-title">{{ $data->name }}</h5>
-                  <p class="card-text">
-                    <small class="text-muted">
-                      {{ $data->category->name }}
-                    </small>
-                  </p>
-                </td>
-                <td>{{ $data->jumlah }} Kursi</td>
-                <td>
-                  <form
-                    action="{{ route('transportasi.destroy', $data->id) }}"
-                    method="POST"
-                  >
-                    @csrf
-                    @method('delete')
-                    <a
-                      href="{{ route('transportasi.edit', $data->id) }}"
-                      type="button"
-                      class="btn btn-warning btn-sm btn-circle"
-                      ><i class="fas fa-edit"></i
-                    ></a>
-                    <button
-                      type="submit"
-                      class="btn btn-danger btn-sm btn-circle"
-                      onclick="return confirm('Yakin');"
-                    >
-                      <i class="fas fa-trash"></i>
-                    </button>
-                  </form>
-                </td>
-              </tr>
+            <tr class="border-b border-gray-200 hover:bg-gray-50">
+              <td class="px-6 py-4">{{ $loop->iteration }}</td>
+              <td class="px-6 py-4">{{ $data->kode }}</td>
+              <td class="px-6 py-4">
+                <div class="font-semibold">{{ $data->name }}</div>
+                <div class="text-xs text-gray-500">{{ $data->category->name }}</div>
+              </td>
+              <td class="px-6 py-4">{{ $data->jumlah }} Kursi</td>
+              <td class="px-6 py-4 text-center">
+                <form action="{{ route('transportasi.destroy', $data->id) }}" method="POST">
+                  @csrf
+                  @method('delete')
+                  <a href="{{ route('transportasi.edit', $data->id) }}" class="text-yellow-500 hover:text-yellow-700 mr-2"><i class="fas fa-edit"></i></a>
+                  <button type="submit" class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
+                </form>
+              </td>
+            </tr>
             @endforeach
           </tbody>
         </table>
       </div>
     </div>
   </div>
-  <!-- Add Modal -->
-  <div
-  class="modal fade"
-  id="add-modal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Tambah Transportasi</h5>
-          <button
-            type="button"
-            class="close"
-            data-dismiss="modal"
-            aria-label="Close"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <form action="{{ route('transportasi.store') }}" method="POST">
-          @csrf
-          <div class="modal-body">
-            <input type="hidden" name="id">
-            <div class="form-group">
-              <label for="name">Name</label>
-              <input
-                type="text"
-                class="form-control"
-                id="name"
-                name="name"
-                placeholder="Name Transportasi"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="kode">Kode</label>
-              <input
-                type="text"
-                class="form-control"
-                id="kode"
-                name="kode"
-                placeholder="Kode Transportasi"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="jumlah">Jumlah Kursi</label>
-              <input
-                type="text"
-                class="form-control"
-                id="jumlah"
-                name="jumlah"
-                onkeypress="return inputNumber(event)"
-                placeholder="Jumlah Kursi"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="category_id">Category</label><br>
-              <select
-                class="select2 form-control"
-                id="category_id"
-                name="category_id"
-                required
-                style="width: 100%; color: #6e707e;"
-              >
-                <option value="" disabled selected>-- Pilih Category --</option>
-                @foreach ($category as $data)
-                  <option value="{{ $data->id }}">{{ $data->name }}</option>
-                @endforeach
-              </select>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">
-              Kembali
-            </button>
-            <button type="submit" class="btn btn-primary">Tambah</button>
-          </div>
-        </form>
+</div>
+
+<!-- Add Modal -->
+<div class="modal fade" id="add-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-gray-200 px-6 py-4">
+        <h5 class="modal-title text-lg font-semibold text-gray-800" id="exampleModalLabel">Tambah Transportasi</h5>
+        <button type="button" class="close text-gray-700" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
+      <form action="{{ route('transportasi.store') }}" method="POST">
+        @csrf
+        <div class="modal-body px-6 py-4">
+          <input type="hidden" name="id">
+          <div class="mb-4">
+            <label for="name" class="block text-sm font-medium text-gray-700">Nama</label>
+            <input type="text" class="form-input w-full rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500" id="name" name="name" placeholder="Nama Transportasi" required>
+          </div>
+          <div class="mb-4">
+            <label for="kode" class="block text-sm font-medium text-gray-700">Kode</label>
+            <input type="text" class="form-input w-full rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500" id="kode" name="kode" placeholder="Kode Transportasi" required>
+          </div>
+          <div class="mb-4">
+            <label for="jumlah" class="block text-sm font-medium text-gray-700">Jumlah Kursi</label>
+            <input type="text" class="form-input w-full rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500" id="jumlah" name="jumlah" onkeypress="return inputNumber(event)" placeholder="Jumlah Kursi" required>
+          </div>
+          <div class="mb-4">
+            <label for="category_id" class="block text-sm font-medium text-gray-700">Kategori</label>
+            <select class="select2 form-select w-full rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500" id="category_id" name="category_id" required>
+              <option value="" disabled selected>-- Pilih Kategori --</option>
+              @foreach ($category as $data)
+                <option value="{{ $data->id }}">{{ $data->name }}</option>
+              @endforeach
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer bg-gray-100 px-6 py-4">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
+          <button type="submit" class="btn btn-primary">Tambah</button>
+        </div>
+      </form>
     </div>
   </div>
+</div>
 @endsection
+
 @section('script')
-  <script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
-  <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
-  <script src="{{ asset('vendor/select2/dist/js/select2.full.min.js') }}"></script>
-  <script>
-    $(document).ready(function() {
-      $('#dataTable').DataTable();
+<script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('vendor/select2/dist/js/select2.full.min.js') }}"></script>
+<script>
+  $(document).ready(function() {
+    $('#transportasi-table').DataTable({
+      "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
     });
+
     if(jQuery().select2) {
       $(".select2").select2();
     }
-    function inputNumber(e) {
-      const charCode = (e.which) ? e.which : w.keyCode;
-      if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-        return false;
-      }
-      return true;
-    };
-  </script>
+  });
+
+  function inputNumber(e) {
+    const charCode = (e.which) ? e.which : e.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+  };
+</script>
 @endsection

@@ -17,7 +17,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/';
+    public const HOME = '/beranda';
 
     /**
      * The controller namespace for the application.
@@ -47,6 +47,9 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
         });
+
+        // Add redirect to 'beranda' if accessed root URL
+        Route::redirect('/', '/beranda');
     }
 
     /**

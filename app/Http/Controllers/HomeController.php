@@ -31,6 +31,34 @@ class HomeController extends Controller
         $pendapatan = Pemesanan::where('status', 'Sudah Bayar')->sum('total');
         $transportasi = Transportasi::count();
         $user = User::count();
-        return view('server.home', compact('rute', 'pendapatan', 'transportasi', 'user'));
+
+        $cards = [
+            [
+                'title' => 'Data Rute',
+                'value' => $rute,
+                'color' => 'primary',
+                'icon' => 'fa-route'
+            ],
+            [
+                'title' => 'Pendapatan',
+                'value' => 'Rp. ' . number_format($pendapatan, 0, ',', '.'),
+                'color' => 'success',
+                'icon' => 'fa-dollar-sign'
+            ],
+            [
+                'title' => 'Data Transportasi',
+                'value' => $transportasi,
+                'color' => 'warning',
+                'icon' => 'fa-subway'
+            ],
+            [
+                'title' => 'Data User',
+                'value' => $user,
+                'color' => 'danger',
+                'icon' => 'fa-users'
+            ]
+        ];
+
+        return view('server.home', compact('cards', 'rute', 'pendapatan', 'transportasi', 'user'));
     }
 }

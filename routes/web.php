@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BerandaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::redirect('/', '/beranda');
+
+Route::get('/hasil-pencarian', function () {
+    return view('hasil_pencarian');
+});
+
+
+// Route untuk beranda, tidak memerlukan autentikasi
+Route::get('/beranda', [BerandaController::class, 'index'])->name('beranda');
+
+Route::post('/search-tickets', [BerandaController::class, 'search'])->name('ticket.search');
+
+
+// Auth routes
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
@@ -34,6 +49,7 @@ Route::middleware(['auth'])->group(function () {
             Route::resource('/rute', App\Http\Controllers\RuteController::class);
             Route::resource('/user', App\Http\Controllers\UserController::class);
             Route::get('/transaksi', [App\Http\Controllers\LaporanController::class, 'index'])->name('transaksi');
+            Route::resource('/artikel', App\Http\Controllers\ArtikelController::class);
         });
     });
 

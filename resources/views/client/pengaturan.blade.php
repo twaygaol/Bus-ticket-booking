@@ -19,7 +19,7 @@
   <div class="row justify-content-center">
     @if (Auth::user()->level != "Admin")
     <div class="col-12" style="margin-top: -15px">
-      <a href="javascript:window.history.back();" class="text-white btn"><i class="fas fa-arrow-left mr-2"></i> Kembali</a>
+      <a href="javascript:window.history.back();" class="text-gray-900 btn"><i class="fas fa-arrow-left mr-2"></i> Kembali</a>
     @else
     <div class="col-12">
     @endif
@@ -32,7 +32,7 @@
               <td class="text-right">
                 <button
                   type="button"
-                  class="btn btn-primary btn-sm"
+                  class="bg-green-500 p-1 rounded-sm text-sm"
                   data-toggle="modal"
                   data-target="#ubah-name"
                 >
@@ -46,7 +46,7 @@
               <td class="text-right">
                 <button
                   type="button"
-                  class="btn btn-primary btn-sm"
+                  class="bg-green-500 p-1 rounded-sm text-sm"
                   data-toggle="modal"
                   data-target="#ubah-password"
                 >

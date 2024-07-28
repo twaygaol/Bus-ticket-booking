@@ -47,16 +47,16 @@
     @else
     <div class="col-12">
     @endif
-      <div class="card shadow h-100" style="border-top: .25rem solid #4e73df">
+      <div class="card shadow h-100" style="border-top: .25rem solid green">
         <div class="card-body">
           <div class="row no-gutters align-items-center justify-content-center">
             <div class="col h5 font-weight-bold" style="margin-bottom: 0">Detail Perjalanan</div>
             <div class="col-auto">
               <span class="title">
                 <div class="title-icon rotate-n-15">
-                  <i class="fas fa-ticket-alt"></i>
+                  <i class="fas fa-ticket-alt text-green-800"></i>
                 </div>
-                <div class="title-text ml-1">Ticket</div>
+                <div class="title-text ml-1 text-gray-900">PT Al MASAR</div>
               </span>
             </div>
           </div>

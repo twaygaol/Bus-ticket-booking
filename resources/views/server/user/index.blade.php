@@ -70,16 +70,17 @@
   </style>
 @endsection
 @section('content')
-  <div class="card shadow mb-4">
+  <div class="card mb-4">
     <div class="card-header py-3">
       <!-- Button trigger modal -->
       <button
         type="button"
-        class="btn btn-primary btn-sm"
+        class="inline-flex items-center px-4 py-2 text-sm font-medium text-black bg-green-500 border border-transparent rounded-md shadow-sm hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+
         data-toggle="modal"
         data-target="#add-modal"
       >
-        <i class="fas fa-plus"></i>
+        <i class="fas fa-plus"></i> Tambah User
       </button>
     </div>
     <div class="card-body">
